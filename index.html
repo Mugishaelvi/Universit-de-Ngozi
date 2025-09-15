@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IDIKO | Université de Ngozi</title>
+    <link rel="icon" href="ung.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --blue: #2a2185;
+            --white: #fff;
+            --gray: #f5f5f5;
+            --black1: #222;
+            --black2: #999;
+            --light-blue: #4f3cc9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--gray);
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .navigation {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--blue);
+            padding-top: 20px;
+            transition: 0.3s ease;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .navigation.active {
+            left: 0;
+        }
+
+        .navigation ul {
+            list-style: none;
+        }
+
+        .navigation ul li {
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        .navigation ul li:hover {
+            background: var(--white);
+            color: var(--blue);
+        }
+
+        .navigation ul li a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation ul li .icon {
+            margin-right: 10px;
+        }
+
+        .main {
+            margin-left: 300px;
+            width: calc(100% - 300px);
+            padding: 20px;
+            transition: 0.3s ease;
+        }
+
+        .main.active {
+            margin-left: 0;
+        }
+
+        .topbar {
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topbar h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--blue);
+            flex: 1;
+            min-width: 250px;
+        }
+
+
+
+
+        .topbar-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .custom-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--blue);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.3s ease;
+        }
+
+        .custom-btn:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .topbar-buttons {
+                justify-content: center;
+            }
+
+            .custom-btn {
+                flex: 1 1 100%;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+
+
+
+
+        .cardBox {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--light-blue);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .card .numbers {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--blue);
+        }
+
+        .card:hover .numbers {
+            color: var(--white);
+        }
+
+        .card .cardName {
+            margin-top: 10px;
+            color: var(--black2);
+        }
+
+        .card:hover .cardName {
+            color: var(--white);
+        }
+
+        .iconBx {
+            font-size: 2rem;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .photoGallery {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .photoGallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .photoGallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 22px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            background: var(--black1);
+            height: 4px;
+            width: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 991px) {
+            .navigation {
+                left: -300px;
+            }
+
+            .navigation.active {
+                left: 0;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .main.active {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .topbar-buttons {
+                justify-content: flex-start;
+            }
+
+            .custom-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+
+
+
+        .fixed-icons {
+            position: fixed;
+            bottom: 20px;
+            /* hejuru gato ya footer */
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.2);
+            /* transparent background */
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            /* icyifuzo: effect ya glass */
+        }
+
+        .fixed-icons a {
+            color: var(--blue);
+            /* or white if preferred */
+            font-size: 24px;
+            transition: transform 0.9s ease, color 0.9s ease;
+        }
+
+        .fixed-icons a:hover {
+            transform: scale(1.2);
+            color: var(--light-blue);
+        }
+
+
+
+        .slideshow-container {
+            max-width: 800px;
+            /* Igena ubunini ntarengwa */
+            width: 100%;
+            /* Ijyana na screen */
+            margin: 0 auto;
+            /* Centre */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slideshow-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .slideshow-container {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <ul>
+                <li>
+                    <a href="#"><span class="icon"><img src="ung.png" alt="UNG Logo" height="40" /></span><span
+                            class="title">Université de Ngozi</span></a>
+                </li>
+                <li><a href="#"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span
+                            class="title">Accueil</span></a></li>
+                <li><a href="#"><span class="icon"><ion-icon name="school-outline"></ion-icon></span><span
+                            class="title">Formations</span></a></li>
+                <li><a href="#"><span class="icon"><ion-icon name="people-outline"></ion-icon></span><span
+                            class="title">Étudiants</span></a></li>
+            </ul>
+        </nav>
+
+        <main class="main">
+            <header class="topbar">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <h2>IDIKO - Institut de Documentation, d’Information et de Communication</h2>
+                <div class="topbar-buttons">
+                    <a href="#" class="custom-btn">
+                        <ion-icon name="home-outline"></ion-icon>Accueil
+                    </a>
+                    <a href="#" class="custom-btn">
+                        <ion-icon name="chatbubbles-outline"></ion-icon>UNG Chat
+                    </a>
+                    <a href="#" class="custom-btn">
+                        <ion-icon name="book-outline"></ion-icon>Cours Notes
+                    </a>
+                    <a href="login.html" class="custom-btn">
+                        <ion-icon name="log-in-outline"></ion-icon>Login
+                    </a>
+                    <a href="#" class="custom-btn">
+                        <ion-icon name="person-add-outline"></ion-icon>Signup
+                    </a>
+                </div>
+
+            </header>
+
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img src="1.jpg" alt="Slide 1">
+                </div>
+                <div class="mySlides fade">
+                    <img src="2.jpg" alt="Slide 2">
+                </div>
+                <div class="mySlides fade">
+                    <img src="3.jpg" alt="Slide 3">
+                </div>
+            </div>
+
+
+            <section class="cardBox">
+                <div class="card">
+                    <div class="numbers">MISSION</div>
+                    <div class="cardName">Former des professionnels qualifiés dans les domaines de l’information...
+                    </div>
+                    <div class="iconBx"><ion-icon name="document-text-outline"></ion-icon></div>
+                </div>
+                <div class="card">
+                    <div class="numbers">VISION</div>
+                    <div class="cardName">Être un centre d’excellence en sciences de l’information...</div>
+                    <div class="iconBx"><ion-icon name="eye-outline"></ion-icon></div>
+                </div>
+                <div class="card">
+                    <div class="numbers">SLOGAN</div>
+                    <div class="cardName">« L’information au cœur du développement »</div>
+                    <div class="iconBx"><ion-icon name="megaphone-outline"></ion-icon></div>
+                </div>
+            </section>
+
+            <section>
+                <h3 style="color: var(--blue); margin-top: 40px;">Galerie des Photos</h3>
+                <div class="photoGallery">
+                    <img src="1.jpg" alt="Photo 1" />
+                    <img src="2.jpg" alt="Photo 2" />
+                    <img src="3.jpg" alt="Photo 3" />
+                    <img src="4.jpg" alt="Photo 4" />
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+    <!-- Fixed transparent icons -->
+    <!-- Fixed transparent social media icons -->
+    <div class="fixed-icons">
+        <a href="https://facebook.com" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a>
+        <a href="https://twitter.com" target="_blank"><ion-icon name="logo-twitter"></ion-icon></a>
+        <a href="https://instagram.com" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
+        <a href="https://linkedin.com" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
+        <a href="https://youtube.com" target="_blank"><ion-icon name="logo-youtube"></ion-icon></a>
+        <a href="mailto:contact@ung.ac.bi"><ion-icon name="mail-outline"></ion-icon></a>
+        <a href="tel:+257123456789"><ion-icon name="call-outline"></ion-icon></a>
+        <a href="https://wa.me/257123456789"><ion-icon name="logo-whatsapp"></ion-icon></a>
+    </div>
+
+
+
+    <footer style="background-color: var(--blue); color: var(--white); padding: 20px 0; text-align: center;">
+        <p>&copy; 2025 Université de Ngozi. Tous droits réservés.</p>
+        <p>Adresse: Ngozi, Burundi</p>
+        <p>Email: <a href="mailto:contact@ung.ac.bi" style="color: white;">contact@ung.ac.bi</a> | Téléphone: +257 123
+            456 789</p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        const hamburger = document.getElementById("hamburger");
+        const navigation = document.querySelector(".navigation");
+        const main = document.querySelector(".main");
+
+        hamburger.onclick = () => {
+            hamburger.classList.toggle("active");
+            navigation.classList.toggle("active");
+            main.classList.toggle("active");
+        };
+
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+        showSlides();
+    </script>
+</body>
+
+</html>
